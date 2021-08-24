@@ -1,7 +1,31 @@
+//directory-tree will help us get all the file names in the directory
+const dirTree = require("directory-tree");
+
 const xlsx = require('xlsx');
 
-//Here we call the file
-const wb = xlsx.readFile("ventas.xls");
+
+
+// -------------- LOGIC FOR THE INTELLIGENT DIRECTORY FILENAMES RETRIEVAL ------
+
+//Here we are saving all excel file names into an array
+const tree = dirTree('./');
+const files = tree.children;
+const fileNamesArray = [];
+for(const file of files) {
+    if(file.extension == ".xls") {
+        fileNamesArray.push(file.name);
+    };
+};
+console.log(fileNamesArray);
+
+
+// -------------- LOGIC FOR THE EXCEL PARSING ---------------------
+
+//Here we call one of the files for testing
+const wb = xlsx.readFile(fileNamesArray[0]);
+
+//if we wanted only one precise file:
+//const wb = xlsx.readFile("ventas.xls");
 
 
 //Here we call the first sheet (we ain't sure about first sheet's name)
@@ -20,7 +44,7 @@ const saleDate = "octubre";
 //We add the date to each row
 for(const sale of sales) {
     Object.assign(sale, {date: saleDate});
-}
+};
 
 //testing
 console.log(sales[1]);
