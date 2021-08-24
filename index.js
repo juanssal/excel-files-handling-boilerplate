@@ -12,21 +12,24 @@ const ws = wb.Sheets[firstSheetName];
 //const ws = wb.Sheets["ventas"];
 
 //this xlsx.utils.sheet_to_json will ransform each row into a JSON object
-const ventas = xlsx.utils.sheet_to_json(ws);
+const sales = xlsx.utils.sheet_to_json(ws);
 
 //Here we add a dummy date
-const date = "octubre";
+const saleDate = "octubre";
 
 //We add the date to each row
-for(const venta of ventas) {
-    Object.assign(venta, {fecha: date});
+for(const sale of sales) {
+    Object.assign(sale, {date: saleDate});
 }
 
-console.log(ventas[1]);
+//testing
+console.log(sales[1]);
 
+
+//example of manipulating data from our new JSON objects
 let total = 0;
-for(const venta of ventas) {
-    total += venta.total;
+for(const sale of sales) {
+    total += sale.total;
 };
 
-console.log(total);
+console.log(`Total sale for ${saleDate} is ${total} USD`);
